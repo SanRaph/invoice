@@ -1,0 +1,6 @@
+PyQt5~=5.15.4
+requests~=2.26.0
+pdfplumber~=0.5.28
+pyzbar~=0.1.8
+pdf2image~=1.16.0
+opencv-python~=4.3.0.36

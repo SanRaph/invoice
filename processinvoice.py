@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QDialog, QApplication, QFileDialog
 from PyQt5.uic import loadUi
+import upload_process
 
 
 class MainWindow(QDialog):
@@ -16,12 +17,12 @@ class MainWindow(QDialog):
         file_name = QFileDialog.getOpenFileName(self, 'Upload Invoice', '')
         self.filename.setText(file_name[0])
 
-    def upload_file(self):
-        self.filename.clear()
-
     def netsuite_path(self):
-        path = "ahthhhahthhahthhthalth"
-        self.netsuiteedit.setText(path)
+        return self.netsuiteedit.text()
+
+    def upload_file(self):
+        upload_process.upload_barcode(self.filename.text(), self.netsuite_path())
+        self.filename.clear()
 
 
 app = QApplication(sys.argv)
