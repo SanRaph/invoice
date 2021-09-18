@@ -1,3 +1,6 @@
+import base64
+import json
+
 import cv2
 from pyzbar import pyzbar
 import requests
@@ -12,7 +15,14 @@ def convert_pdf_to_text(file_path):
     for page in pages:
         text = page.extract_text()
         full_text += text
+    pdf.close()
     return full_text
+
+
+def get_file_content(file_path):
+    with open(file_path, 'rb') as file:
+        encode = base64.b64encode(file.read())
+    return encode
 
 
 def set_url(url_path):
@@ -23,10 +33,11 @@ def set_url(url_path):
 
 def upload_barcode(file_path, url_path):
     url = set_url(url_path)
+    file_name = file_path.split('/')[-1]
 
     headers = {
+        'Authorization': 'OAuth realm="5774630",oauth_consumer_key="a5cadba7533c1f5b1a6bcecd088c1de1cf2c6442044250859fdaf5d6a3327fd4",oauth_token="b9195e93e272c7fd63ab47df3404b8688ed907827febe408208f1933b58e3f35",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1631905608",oauth_nonce="DV1Eh3yLCf6",oauth_version="1.0",oauth_signature="UA67Drt1XGESJ6Ygc9nW9B8Fe6E%3D"',
         'Content-Type': 'application/json',
-        'Authorization': 'OAuth realm="5774630",oauth_consumer_key="a5cadba7533c1f5b1a6bcecd088c1de1cf2c6442044250859fdaf5d6a3327fd4",oauth_token="b9195e93e272c7fd63ab47df3404b8688ed907827febe408208f1933b58e3f35",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1631817578",oauth_nonce="x0x3CDHPGKn",oauth_version="1.0",oauth_signature="edvx9rZXLGKWQBSP5BU6pFepm1U%3D"',
         'Cookie': 'NS_ROUTING_VERSION=LAGGING'
     }
 
@@ -48,12 +59,10 @@ def upload_barcode(file_path, url_path):
         payload = {
             "recordType": "invoice",
             "recordNumber": b_data,
-            "fileType": "PNGIMAGE",
-            "fileName": "",
-            "fileContent": convert_pdf_to_text(file_path)
+            "fileType": "PDF",
+            "fileName": file_name,
+            "fileContent": get_file_content(file_path).decode('utf-8')
         }
 
-        print(payload)
-
-        response = requests.post(url=url, headers=headers, data=payload)
+        response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
         print(response.text)
