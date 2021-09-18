@@ -1,7 +1,6 @@
 import base64
 import glob
 import json
-import os
 import shutil
 
 
@@ -20,29 +19,6 @@ def read_config_data():
 
 def get_files_in_folder(folder):
     return glob.glob(folder)
-
-
-def changes_in_folder(folder):
-    saved_set = set()
-    my_path = folder
-
-    name_set = set()
-    for file in os.listdir(my_path):
-        full_path = os.path.join(my_path, file)
-        if os.path.isfile(full_path):
-            name_set.add(file)
-
-    retrieved_set = set()
-    for name in name_set:
-        stat = os.stat(os.path.join(my_path, name))
-        time = stat.ST_CTIME
-        size = stat.ST_SIZE
-        last_modified = stat.ST_MTIME
-        retrieved_set.add((name, time, size, last_modified))
-
-        new_set = retrieved_set - saved_set
-
-        return new_set
 
 
 def convert_pdf_to_text(file_path):
@@ -75,26 +51,23 @@ def get_image_content(file_path):
     return encoded_string
 
 
-def set_url(url_path):
-    if not url_path:
-        return "https://5774630.restlets.api.netsuite.com/app/site/hosting/restlet.nl?deploy=1&script=1878"
-    return url_path
-
-
 def upload_barcode(file_path):
     config_data = read_config_data()
-    api_link = config_data.get('api_link')
-    url = set_url(api_link)
+    url = config_data.get('api_link')
+    consumer_key = config_data.get('consumer_key')
+    consumer_key = f'"{consumer_key}"'
+    access_token = config_data.get("access_token")
+    access_token = f'"{access_token}"'
     file_split = file_path.split('/')[-1].split('.')
     file_name, file_extension = file_split[0], file_split[1]
     file = file_name + '.' + file_extension
 
     headers = {
-        'Authorization': 'OAuth realm="5774630",'
-                         'oauth_consumer_key="a5cadba7533c1f5b1a6bcecd088c1de1cf2c6442044250859fdaf5d6a3327fd4",'
-                         'oauth_token="b9195e93e272c7fd63ab47df3404b8688ed907827febe408208f1933b58e3f35",'
-                         'oauth_signature_method="HMAC-SHA1",oauth_timestamp="1631905608",oauth_nonce="DV1Eh3yLCf6",'
-                         'oauth_version="1.0",oauth_signature="UA67Drt1XGESJ6Ygc9nW9B8Fe6E%3D"',
+        'Authorization': f'OAuth realm="5774630",'
+                         f'oauth_consumer_key={consumer_key},'
+                         f'oauth_token={access_token},'
+                         f'oauth_signature_method="HMAC-SHA1",oauth_timestamp="1631997167",oauth_nonce="sVPRo7oyi0K",'
+                         f'oauth_version="1.0",oauth_signature="Jd6xwEsubdlBOluQmsExUkF7TgI%3D"',
         'Content-Type': 'application/json',
         'Cookie': 'NS_ROUTING_VERSION=LAGGING'
     }
@@ -134,11 +107,13 @@ def upload_barcode(file_path):
             }
 
         response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
-        print(response.text)
-        if "success" in response.text:
-            move_file_to_folder(file)
+        if response.status_code == 200:
+            if "success" in response.text:
+                move_file_to_folder(file)
+            else:
+                print(file, "failed to upload to Netsuite with 200 status")
         else:
-            print("failed")
+            print(file, "failed to upload without 200 status")
 
 
 def process_files(files):

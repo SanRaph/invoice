@@ -12,7 +12,7 @@ def main(files_):
 if __name__ == "__main__":
     path_to_watch = config_data.get("source_folder")
     while True:
-        time.sleep(60)
+        time.sleep(config_data.get('refresh_time'))
         files = upload_process.get_files_in_folder((config_data.get("source_folder") + "*"))
         if files:
             main(files)
