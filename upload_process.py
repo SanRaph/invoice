@@ -1,7 +1,9 @@
 import base64
 import glob
 import json
+import os
 import shutil
+
 
 import cv2
 import pdfplumber
@@ -18,6 +20,29 @@ def read_config_data():
 
 def get_files_in_folder(folder):
     return glob.glob(folder)
+
+
+def changes_in_folder(folder):
+    saved_set = set()
+    my_path = folder
+
+    name_set = set()
+    for file in os.listdir(my_path):
+        full_path = os.path.join(my_path, file)
+        if os.path.isfile(full_path):
+            name_set.add(file)
+
+    retrieved_set = set()
+    for name in name_set:
+        stat = os.stat(os.path.join(my_path, name))
+        time = stat.ST_CTIME
+        size = stat.ST_SIZE
+        last_modified = stat.ST_MTIME
+        retrieved_set.add((name, time, size, last_modified))
+
+        new_set = retrieved_set - saved_set
+
+        return new_set
 
 
 def convert_pdf_to_text(file_path):
