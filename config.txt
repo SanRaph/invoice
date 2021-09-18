@@ -1,0 +1,9 @@
+{
+    "source_folder": "/home/everybees/projects/stuff/invoice/existing_files/",
+    "destination_folder": "/home/everybees/projects/stuff/invoice/new_folder/",
+    "api_link": "https://5774630.restlets.api.netsuite.com/app/site/hosting/restlet.nl?deploy=1&script=1878",
+    "consumer_key": "a5cadba7533c1f5b1a6bcecd088c1de1cf2c6442044250859fdaf5d6a3327fd4",
+    "consumer_secret": "7c08803c96f15d54df63208c196008ba263a84f2e08a1dcdc64e8a8938f00582",
+    "access_token": "b9195e93e272c7fd63ab47df3404b8688ed907827febe408208f1933b58e3f35",
+    "token_secret": "07e82f74e617dcd5c34854f805542dd4cce6c555d145212da3763dc7fc5d86f2"
+}
