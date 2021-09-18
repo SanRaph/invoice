@@ -57,7 +57,6 @@ def convert_pdf_to_text(file_path):
 
 
 def move_file_to_folder(file_name):
-    print(file_name)
     config_data = read_config_data()
     current_folder = config_data.get('source_folder')
     new_folder = config_data.get('destination_folder')
