@@ -135,7 +135,7 @@ def upload_barcode(file_path):
 
         response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
         print(response.text)
-        if "success" not in response.text:
+        if "success" in response.text:
             move_file_to_folder(file)
         else:
             print("failed")
