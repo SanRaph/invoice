@@ -2,7 +2,7 @@ import base64
 import glob
 import json
 import shutil
-
+import datetime
 
 import cv2
 import pdfplumber
@@ -30,6 +30,13 @@ def convert_pdf_to_text(file_path):
         full_text += text
     pdf.close()
     return full_text
+
+
+def write_log(barcode, response):
+    now = datetime.datetime.now()
+    file = open(f'logs/{now.strftime("%b-%d-%Y")}.log', 'a+')
+    log = str(now) + " " + barcode + " : " + response
+    file.write(f"{log}\n")
 
 
 def move_file_to_folder(file_name):
@@ -67,7 +74,7 @@ def upload_barcode(file_path):
                          f'oauth_consumer_key={consumer_key},'
                          f'oauth_token={access_token},'
                          f'oauth_signature_method="HMAC-SHA1",oauth_timestamp="1631997167",oauth_nonce="sVPRo7oyi0K",'
-                         f'oauth_version="1.0",oauth_signature="Jd6xwEsubdlBOluQmsExUkF7TgI%3D"',
+                         f'oauth_version="1.0",oauth_signature="TXyyrN1APC7GpkhZENpg%2Fvuk72M%3D"',
         'Content-Type': 'application/json',
         'Cookie': 'NS_ROUTING_VERSION=LAGGING'
     }
@@ -107,13 +114,9 @@ def upload_barcode(file_path):
             }
 
         response = requests.request("POST", url, headers=headers, data=json.dumps(payload))
-        if response.status_code == 200:
-            if "success" in response.text:
-                move_file_to_folder(file)
-            else:
-                print(file, "failed to upload to Netsuite with 200 status")
-        else:
-            print(file, "failed to upload without 200 status")
+        if response.status_code == 200 and "success" in response.text:
+            move_file_to_folder(file)
+        write_log(payload['recordNumber'], response.text)
 
 
 def process_files(files):
