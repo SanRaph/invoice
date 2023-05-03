@@ -7,14 +7,14 @@ In NetSuite, we need to attach the scanned invoice to the corresponding invoice 
 
 To do that, we need: <br/>
       • A scanner that has a scanning speed of at least 60ppm (60 pages per minute). <br/>
-       Here is the one we will use: https://www.usa.canon.com/internet/portal/us/home/products/details/scanners/document-scanner/imageformula-dr-m160ii <br/>
+         Here is the one we will use: https://www.usa.canon.com/internet/portal/us/home/products/details/scanners/document-scanner/imageformula-dr-m160ii <br/>
       • A Desktop program: <br/>
-        ◦ That will read the barcode in the scanned invoice. <br/>
-        ◦ That will create an API that will upload each document from the local computer to NetSuite. <br/>
+          ◦ That will read the barcode in the scanned invoice. <br/>
+          ◦ That will create an API that will upload each document from the local computer to NetSuite. <br/>
       • A NetSuite API: <br/>
-        ◦ That will receive the scanned document from the image-to-text software. <br/>
-        ◦ That will attach the scanned document to the corresponding NetSuite invoice records. <br/>
-        ◦ That will upload the files from the file cabinet to AWS.
+          ◦ That will receive the scanned document from the image-to-text software. <br/>
+          ◦ That will attach the scanned document to the corresponding NetSuite invoice records. <br/>
+          ◦ That will upload the files from the file cabinet to AWS.
 
 ## A Desktop Program
 
