@@ -111,7 +111,7 @@ To do that, we need:
          }'
 
 
-Parameters:
+### Parameters:
 
 	recordType – Always “invoice”
 	recordNumber – The barcode value
