@@ -92,19 +92,23 @@ To do that, we need:
        print(response.text)
 
 
-cURL
+### cURL
 
-curl --location --request POST 'https://5774630.restlets.api.netsuite.com/app/site/hosting/restlet.nl?deploy=1&script=1878' \
---header 'Content-Type: application/json' \
---header 'Authorization: OAuth realm="5774630",oauth_consumer_key="a5cadba7533c1f5b1a6bcecd088c1de1cf2c6442044250859fdaf5d6a3327fd4",oauth_token="b9195e93e272c7fd63ab47df3404b8688ed907827febe408208f1933b58e3f35",oauth_signature_method="HMAC-SHA1",oauth_timestamp="1630602678",oauth_nonce="qQ4n9hdz96u",oauth_version="1.0",oauth_signature="cHoxq5NenUCGIIXDoeYzxkHpzY0%3D"' \
---header 'Cookie: NS_ROUTING_VERSION=LAGGING' \
---data-raw '{
-    "recordType": "invoice",
-    "recordNumber": "INV190251",
-    "fileType": "PDF",
-    "fileName": "test1.pdf",
-    "fileContent": "file content"
-}'
+	curl --location --request POST 'https://5774630.restlets.api.netsuite.com/app/site/hosting/restlet.nl?deploy=1&script=1878'
+	\--header 'Content-Type: application/json' \--header 'Authorization: OAuth realm="5774630",
+        oauth_consumer_key="a5cadba7533c1f5b1a6bcecd088c1de1cf2c6442044250859fdaf5d6a3327fd4",
+        oauth_token="b9195e93e272c7fd63ab47df3404b8688ed907827febe408208f1933b58e3f35",oauth_signature_method="HMAC-SHA1",
+	oauth_timestamp="1630602678",
+	oauth_nonce="qQ4n9hdz96u",
+	oauth_version="1.0",
+	oauth_signature="cHoxq5NenUCGIIXDoeYzxkHpzY0%3D"'\--header 'Cookie: NS_ROUTING_VERSION=LAGGING' \--data-raw 
+	'{
+           "recordType": "invoice",
+           "recordNumber": "INV190251",
+           "fileType": "PDF",
+           "fileName": "test1.pdf",
+           "fileContent": "file content"
+         }'
 
 
 Parameters:
