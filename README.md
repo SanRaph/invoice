@@ -16,16 +16,16 @@ To do that, we need:
         ◦ That will attach the scanned document to the corresponding NetSuite invoice records.
         ◦ That will upload the files from the file cabinet to AWS.
 
-A Desktop Program
+## A Desktop Program
 
-Use Case:
+#### Use Case:
     • The employee scans 2000 invoices at one time using the ultra-fast scanner (60 pages per minute)
     • The scanner creates PDF, PNG or JPEG files of the 2000 invoices in the local computer.
     • The desktop program reads each of the PDF, PNG or JPEG files to know the Invoice number based on the barcode of every file.
     • The desktop program triggers a REST Api call to NetSuite, the ERP system, to upload the files.
     • The desktop program moves the PDF, PNG or JPEG files of the 2000 invoices to other folder.
 
-Requirements:
+#### Requirements:
     • It should be easily installed to any local computer.
     • It should have a setting where the user can change the folder location where the scanned invoices are located.
     • It should be able to read PDF, PNG or JPEG files.
@@ -35,7 +35,7 @@ Requirements:
 
 
 
-REST API
+## REST API
 
 Python – http.client
 
