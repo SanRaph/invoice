@@ -1,6 +1,6 @@
 # Python Image to Text Program
 
-## Project Description
+## Project Description And How To Contribute
 
 We need to scan an average of 2000 printed invoices and upload the scanned copies of them to NetSuite which is our ERP system. 
 In NetSuite, we need to attach the scanned invoice to the corresponding invoice record.
