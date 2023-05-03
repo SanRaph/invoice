@@ -1,4 +1,4 @@
-# Python Image to Text Program
+# CEENIO Is A Python Image to Text Program
 
 ## Project Description And How To Contribute
 
